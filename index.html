@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XYZ</title>
+  <title>Mu</title>
   <meta name="description" content="A new AI lab, experimenting at the frontier of AI agents and applications." />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="XYZ" />
+  <meta property="og:title" content="Mu" />
   <meta property="og:description" content="A new AI lab, experimenting at the frontier of AI agents and applications." />
   <meta property="og:type" content="website" />
 
@@ -111,6 +111,31 @@
       animation: rise 1.4s ease forwards 0.9s;
     }
 
+    .join {
+      margin-top: 3rem;
+      opacity: 0;
+      animation: rise 1.4s ease forwards 1.3s;
+    }
+
+    .join a {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid rgba(155, 140, 255, 0.25);
+      border-radius: 999px;
+      transition: color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .join a:hover {
+      color: var(--fg);
+      border-color: var(--accent);
+      box-shadow: 0 0 24px rgba(155, 140, 255, 0.25);
+    }
+
     @keyframes rise {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -144,12 +169,15 @@
   <div class="grain" aria-hidden="true"></div>
 
   <main>
-    <div class="mark">XYZ</div>
+    <div class="mark">MU.XYZ</div>
     <h1>
       A new AI lab, experimenting at the
       <span class="em">frontier of AI agents and applications</span>.
     </h1>
     <p class="sub">Something is taking shape<span class="pulse" aria-hidden="true"></span></p>
+    <div class="join">
+      <a href="https://discord.gg/WeMU5AGxD" target="_blank" rel="noopener noreferrer">Enter the Discord</a>
+    </div>
   </main>
 </body>
 </html>
