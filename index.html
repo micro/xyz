@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mu — Your personal AI</title>
-  <meta name="description" content="Mu is your personal AI — news, mail, markets, weather, search and more, all through one interface. No ads. No tracking. No algorithm." />
+  <meta name="description" content="Mu is your personal AI — news, mail, markets, weather, search and more, all through one interface. No ads. No tracking. No algorithm. Try free, or go Pro." />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph -->
@@ -20,11 +20,11 @@
       --fg: #e8e8ec;
       --muted: #6a6a78;
       --accent: #9b8cff;
+      --card: rgba(255, 255, 255, 0.025);
+      --border: rgba(255, 255, 255, 0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html, body { height: 100%; }
 
     body {
       background: var(--bg);
@@ -34,10 +34,11 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      overflow: hidden;
+      padding: 4rem 1.25rem;
       position: relative;
     }
 
@@ -72,8 +73,8 @@
     main {
       position: relative;
       z-index: 2;
-      max-width: 40rem;
-      padding: 2rem;
+      width: 100%;
+      max-width: 38rem;
       text-align: center;
     }
 
@@ -82,9 +83,9 @@
       letter-spacing: 0.6em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.25rem;
       opacity: 0;
-      animation: rise 1.2s ease forwards 0.2s;
+      animation: rise 1.2s ease forwards 0.15s;
     }
 
     h1 {
@@ -93,13 +94,10 @@
       font-weight: 300;
       letter-spacing: -0.01em;
       opacity: 0;
-      animation: rise 1.4s ease forwards 0.5s;
+      animation: rise 1.4s ease forwards 0.4s;
     }
 
-    h1 .em {
-      color: var(--fg);
-      font-weight: 400;
-    }
+    h1 .em { color: var(--fg); font-weight: 400; }
 
     .lede {
       margin-top: 1.5rem;
@@ -107,43 +105,187 @@
       line-height: 1.6;
       color: #b8b8c4;
       opacity: 0;
-      animation: rise 1.4s ease forwards 0.8s;
+      animation: rise 1.4s ease forwards 0.7s;
     }
 
     .sub {
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
       font-size: 0.8rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--muted);
       opacity: 0;
-      animation: rise 1.4s ease forwards 1.1s;
+      animation: rise 1.4s ease forwards 0.95s;
     }
 
-    .sub .dot {
-      margin: 0 0.7em;
-      color: rgba(155, 140, 255, 0.5);
+    .sub .dot { margin: 0 0.7em; color: rgba(155, 140, 255, 0.5); }
+
+    /* Ask box */
+    .ask {
+      margin-top: 2.75rem;
+      display: flex;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.5rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: rise 1.4s ease forwards 1.15s;
+    }
+
+    .ask:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 28px rgba(155, 140, 255, 0.18);
+    }
+
+    .ask input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--fg);
+      font-size: 1rem;
+      font-family: inherit;
+      font-weight: 300;
+      padding: 0.65rem 0.75rem;
+    }
+
+    .ask input::placeholder { color: var(--muted); }
+
+    .ask button {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #9b8cff, #6f5cff);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      padding: 0 1.15rem;
+      cursor: pointer;
+      transition: filter 0.2s ease, transform 0.1s ease;
+    }
+
+    .ask button:hover { filter: brightness(1.1); }
+    .ask button:active { transform: scale(0.97); }
+
+    .hint {
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      opacity: 0;
+      animation: rise 1.4s ease forwards 1.25s;
+    }
+
+    /* Pro card */
+    .pro {
+      margin-top: 3.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem 1.75rem;
+      text-align: left;
+      opacity: 0;
+      animation: rise 1.4s ease forwards 1.4s;
+    }
+
+    .pro-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pro-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .pro-name .tag {
+      color: var(--accent);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-left: 0.6rem;
+      vertical-align: middle;
+    }
+
+    .pro-price { font-size: 1.05rem; color: #b8b8c4; }
+    .pro-price b { color: var(--fg); font-weight: 600; font-size: 1.45rem; }
+
+    .pro ul {
+      list-style: none;
+      margin: 1.5rem 0;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .pro li {
+      font-size: 0.92rem;
+      color: #c4c4cf;
+      padding-left: 1.6rem;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .pro li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.45em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(155, 140, 255, 0.6);
+    }
+
+    .pro-cta {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, #9b8cff, #6f5cff);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      padding: 0.95rem;
+      border-radius: 12px;
+      transition: filter 0.2s ease, transform 0.1s ease;
+    }
+
+    .pro-cta:hover { filter: brightness(1.1); }
+    .pro-cta:active { transform: scale(0.99); }
+
+    .pro-foot {
+      margin-top: 0.9rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
     .links {
-      margin-top: 3rem;
+      margin-top: 2.75rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       justify-content: center;
       opacity: 0;
-      animation: rise 1.4s ease forwards 1.4s;
+      animation: rise 1.4s ease forwards 1.55s;
     }
 
     .links a {
-      display: inline-block;
       font-size: 0.7rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       padding: 0.7rem 1.4rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border);
       border-radius: 999px;
       transition: color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
@@ -152,11 +294,6 @@
       color: var(--fg);
       border-color: var(--accent);
       box-shadow: 0 0 24px rgba(155, 140, 255, 0.2);
-    }
-
-    .links a.primary {
-      color: var(--fg);
-      border-color: rgba(155, 140, 255, 0.4);
     }
 
     @keyframes rise {
@@ -183,7 +320,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .field, .pulse { animation: none; }
-      .mark, h1, .sub { animation: none; opacity: 1; }
+      .mark, h1, .lede, .sub, .ask, .hint, .pro, .links { animation: none; opacity: 1; }
     }
   </style>
 </head>
@@ -200,10 +337,47 @@
       News, mail, markets, weather, search and more — all through one interface.
     </p>
     <p class="sub">No ads<span class="dot">·</span>No tracking<span class="dot">·</span>No algorithm<span class="pulse" aria-hidden="true"></span></p>
+
+    <form class="ask" id="ask" autocomplete="off">
+      <input id="q" type="text" placeholder="Ask Mu anything…" aria-label="Ask Mu anything" />
+      <button type="submit">Ask&nbsp;Mu</button>
+    </form>
+    <p class="hint">3 free questions as a guest — no account needed.</p>
+
+    <section class="pro" aria-label="Mu Pro">
+      <div class="pro-head">
+        <div class="pro-name">Mu Pro <span class="tag">Unlimited-ish</span></div>
+        <div class="pro-price"><b>£10</b>&nbsp;/&nbsp;month</div>
+      </div>
+      <ul>
+        <li>1,200 credits every month — chat, agent, search and more</li>
+        <li>Priority access to the most capable AI models</li>
+        <li>A personal agent with memory across your conversations</li>
+        <li>News, markets, weather, mail and web search in one place</li>
+        <li>Build your own apps and tools on top of Mu</li>
+      </ul>
+      <a class="pro-cta" href="https://micro.mu/pricing" target="_blank" rel="noopener noreferrer">Go Pro</a>
+      <p class="pro-foot">Cancel anytime · Starter from £5/mo · Free unlimited on Discord</p>
+    </section>
+
     <div class="links">
-      <a class="primary" href="https://discord.gg/WeMU5AGxD" target="_blank" rel="noopener noreferrer">Join the Discord</a>
-      <a href="https://micro.mu" target="_blank" rel="noopener noreferrer">Try the app</a>
+      <a href="https://discord.gg/WeMU5AGxD" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+      <a href="https://micro.mu" target="_blank" rel="noopener noreferrer">Open the app</a>
     </div>
   </main>
+
+  <script>
+    // The page is a static funnel into the live Mu app at micro.mu, which
+    // already handles the free guest tier, accounts and Pro billing.
+    var APP_URL = "https://micro.mu";
+
+    document.getElementById("ask").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var q = document.getElementById("q").value.trim();
+      // Hand the question off to the live app, where the free guest chat answers it.
+      var url = q ? APP_URL + "/?q=" + encodeURIComponent(q) : APP_URL;
+      window.open(url, "_blank", "noopener");
+    });
+  </script>
 </body>
 </html>
