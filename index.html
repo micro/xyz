@@ -374,8 +374,8 @@
     document.getElementById("ask").addEventListener("submit", function (e) {
       e.preventDefault();
       var q = document.getElementById("q").value.trim();
-      // Hand the question off to the live app, where the free guest chat answers it.
-      var url = q ? APP_URL + "/?q=" + encodeURIComponent(q) : APP_URL;
+      // Hand the question off to the live app's agent, which answers it.
+      var url = q ? APP_URL + "/agent?prompt=" + encodeURIComponent(q) : APP_URL + "/agent";
       window.open(url, "_blank", "noopener");
     });
   </script>
